@@ -52,8 +52,6 @@ const Container = styled.div<{ size: BadgeSize; color: BadgeColor }>`
   }}
 
   ${(props) => {
-    console.log(props);
-
     switch (props.color) {
       case BadgeColor.gray:
         return css`
@@ -88,8 +86,7 @@ export function Badge({
   children,
   size = BadgeSize.md,
   color = BadgeColor.primary,
-}: //
-BadgeProps) {
+}: BadgeProps) {
   return (
     <Container size={size} color={color}>
       {children}
