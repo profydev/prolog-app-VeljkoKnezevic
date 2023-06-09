@@ -7,6 +7,7 @@ import { MenuItemButton } from "./menu-item-button";
 import { MenuItemLink } from "./menu-item-link";
 import { Button } from "@features/ui";
 import { breakpoint, color, space, zIndex } from "@styles/theme";
+import useWindowSize from "../api/useWindowSize";
 
 const menuItems = [
   { text: "Projects", iconSrc: "/icons/projects.svg", href: Routes.projects },
@@ -162,14 +163,18 @@ export function SidebarNavigation() {
   const handleSupportClick = () => {
     window.open("mailto:support@prolog-app.com?subject=Support Request:");
   };
+
+  const { width } = useWindowSize();
   return (
     <Container isCollapsed={isSidebarCollapsed}>
       <FixedContainer>
         <Header>
           <Logo
             src={
-              isSidebarCollapsed
-                ? "/icons/logo-small.svg"
+              width >= 1024
+                ? isSidebarCollapsed
+                  ? "/icons/logo-small.svg"
+                  : "/icons/logo-large.svg"
                 : "/icons/logo-large.svg"
             }
             alt="logo"
