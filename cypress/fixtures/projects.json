@@ -2,15 +2,15 @@
   {
     "id": "6d5fff43-d691-445d-a41a-7d0c639080e6",
     "numIssues": 73,
-    "numEvents24h": 7,
+    "numEvents24h": 12,
     "status": "error",
-    "name": "Frontend - Web Test",
+    "name": "Frontend - Web",
     "language": "react"
   },
   {
     "id": "340cb147-6397-4a12-aa77-41100acf085f",
     "numIssues": 25,
-    "numEvents24h": 5,
+    "numEvents24h": 2,
     "status": "warning",
     "name": "Backend",
     "language": "node"
