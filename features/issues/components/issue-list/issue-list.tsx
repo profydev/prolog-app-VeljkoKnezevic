@@ -109,13 +109,17 @@ export function IssueList() {
           </HeaderRow>
         </thead>
         <tbody>
-          {(items || []).map((issue) => (
-            <IssueRow
-              key={issue.id}
-              issue={issue}
-              projectLanguage={projectIdToLanguage[issue.projectId]}
-            />
-          ))}
+          {(items || []).map((issue) => {
+            console.log(issue);
+
+            return (
+              <IssueRow
+                key={issue.id}
+                issue={issue}
+                projectLanguage={projectIdToLanguage[issue.projectId]}
+              />
+            );
+          })}
         </tbody>
       </Table>
       <PaginationContainer>
