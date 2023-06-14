@@ -3,6 +3,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import { SidebarNavigation } from "../sidebar-navigation";
 import { color, displayFont, textFont, space, breakpoint } from "@styles/theme";
+import { FooterComponent } from "../footer";
 
 type PageContainerProps = {
   children: React.ReactNode;
@@ -63,7 +64,6 @@ export function PageContainer({ children, title, info }: PageContainerProps) {
         <meta name="description" content="Error monitoring" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <SidebarNavigation />
       <Main>
         <ContentContainer>
@@ -72,6 +72,7 @@ export function PageContainer({ children, title, info }: PageContainerProps) {
           {children}
         </ContentContainer>
       </Main>
+      <FooterComponent />
     </Container>
   );
 }
