@@ -3,7 +3,9 @@ import Head from "next/head";
 import styled from "styled-components";
 import { SidebarNavigation } from "../sidebar-navigation";
 import { color, displayFont, textFont, space, breakpoint } from "@styles/theme";
-import FooterComponent from "../footer/footer";
+import { NavigationContext } from "../sidebar-navigation";
+import { useContext } from "react";
+import { version } from "package.json";
 
 type PageContainerProps = {
   children: React.ReactNode;
@@ -42,6 +44,54 @@ const ContentContainer = styled.div`
   }
 `;
 
+const Footer = styled.footer<{ isCollapsed: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  background-color: ${color("gray", 50)};
+  padding-block: 24px;
+
+  @media (min-width: ${breakpoint("desktop")}) {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-block: 13.5px;
+    padding-inline: 32px;
+  }
+`;
+
+const Version = styled.p`
+  color: ${color("gray", 400)};
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+
+  @media (min-width: ${breakpoint("desktop")}) {
+    order: 1;
+  }
+`;
+
+const List = styled.div`
+  display: flex;
+  gap: 24px;
+  order: 2;
+`;
+
+const ListItem = styled.a`
+  margin: 0;
+  color: ${color("gray", 500)};
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+`;
+
+const Logo = styled.img`
+  width: 23px;
+  height: 33px;
+  order: 3;
+`;
+
 const Title = styled.h1`
   margin: ${space(0, 0, 1)};
   color: ${color("gray", 900)};
@@ -58,6 +108,8 @@ export function PageContainer({ children, title, info }: PageContainerProps) {
   // combine title in a single string to prevent below warning
   // "Warning: A title element received an array with more than 1 element as children."
   const documentTitle = `ProLog - ${title}`;
+  const { isSidebarCollapsed } = useContext(NavigationContext);
+
   return (
     <Container>
       <Head>
@@ -72,7 +124,16 @@ export function PageContainer({ children, title, info }: PageContainerProps) {
           <Info>{info}</Info>
           {children}
         </ContentContainer>
-        <FooterComponent />
+        <Footer isCollapsed={isSidebarCollapsed}>
+          <List>
+            <ListItem>Docs</ListItem>
+            <ListItem>API</ListItem>
+            <ListItem>Help</ListItem>
+            <ListItem>Community</ListItem>
+          </List>
+          <Logo src="/icons/logo-small.svg" />
+          <Version>Version: {version}</Version>
+        </Footer>
       </Main>
     </Container>
   );
