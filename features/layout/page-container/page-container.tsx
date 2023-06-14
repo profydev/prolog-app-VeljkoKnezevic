@@ -3,7 +3,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import { SidebarNavigation } from "../sidebar-navigation";
 import { color, displayFont, textFont, space, breakpoint } from "@styles/theme";
-import { FooterComponent } from "../footer";
+import FooterComponent from "../footer/footer";
 
 type PageContainerProps = {
   children: React.ReactNode;
