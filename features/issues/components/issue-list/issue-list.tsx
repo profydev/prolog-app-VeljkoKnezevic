@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { color, space, textFont } from "@styles/theme";
 import { ProjectLanguage } from "@api/projects.types";
 import { useGetProjects } from "@features/projects";
@@ -53,6 +53,35 @@ const PaginationButton = styled.button`
   }
 `;
 
+const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Spinner = styled.div`
+  animation: ${rotate360} 1s linear infinite;
+  transform: translateZ(0);
+
+  border-top: 4px solid white;
+  border-right: 8px solid purple;
+  border-bottom: 4px solid white;
+  border-left: 4px solid white;
+  background: transparent;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+`;
+
 const PageInfo = styled.div`
   color: ${color("gray", 700)};
   ${textFont("sm", "regular")}
@@ -75,7 +104,11 @@ export function IssueList() {
   const projects = useGetProjects();
 
   if (projects.isLoading || issuesPage.isLoading) {
-    return <div>Loading</div>;
+    return (
+      <LoaderContainer>
+        <Spinner />
+      </LoaderContainer>
+    );
   }
 
   if (projects.isError) {

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { breakpoint, space } from "@styles/theme";
 import { ProjectCard } from "../project-card";
 import { useGetProjects } from "../../api/use-get-projects";
@@ -18,11 +18,44 @@ const List = styled.ul`
   }
 `;
 
+const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Spinner = styled.div`
+  animation: ${rotate360} 1s linear infinite;
+  transform: translateZ(0);
+  margin-top: 121px;
+  border-top: 4px solid white;
+  border-right: 8px solid purple;
+  border-bottom: 4px solid white;
+  border-left: 4px solid white;
+  background: transparent;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+`;
+
 export function ProjectList() {
   const { data, isLoading, isError, error } = useGetProjects();
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return (
+      <LoaderContainer>
+        <Spinner />
+      </LoaderContainer>
+    );
   }
 
   if (isError) {
