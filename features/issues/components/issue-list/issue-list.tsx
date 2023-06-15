@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import styled, { keyframes } from "styled-components";
-import { color, space, textFont } from "@styles/theme";
+import { breakpoint, color, space, textFont } from "@styles/theme";
 import { ProjectLanguage } from "@api/projects.types";
 import { useGetProjects } from "@features/projects";
 import { useGetIssues } from "../../api/use-get-issues";
@@ -91,6 +91,49 @@ const PageNumber = styled.span`
   ${textFont("sm", "medium")}
 `;
 
+const ErrorParent = styled.div`
+  border: 1px solid #fda29b;
+  border-radius: 8px;
+  padding-block: 16px;
+  display: flex;
+  align-items: center;
+`;
+
+const ErrorIcon = styled.img`
+  margin-inline-end: 13.5px;
+  margin-inline-start: 17.5px;
+`;
+
+const ErrorText = styled.p`
+  color: ${color("error", 700)};
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+`;
+
+const ErrorButton = styled.button`
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  margin-inline-start: auto;
+  margin-inline-end: 20px;
+  color: ${color("error", 700)};
+  background-color: transparent;
+  background-image: url("/icons/button-icon.svg");
+  background-repeat: no-repeat;
+  background-position: right 50%;
+  border: none;
+  text-align: start;
+  padding: 0;
+  min-width: 80px;
+
+  @media (min-width: ${breakpoint("desktop")}) {
+    padding-right: 12px;
+  }
+`;
+
 export function IssueList() {
   const router = useRouter();
   const page = Number(router.query.page || 1);
@@ -113,12 +156,28 @@ export function IssueList() {
 
   if (projects.isError) {
     console.error(projects.error);
-    return <div>Error loading projects: {projects.error.message}</div>;
+    return (
+      <ErrorParent>
+        <ErrorIcon src="/icons/error.svg" />
+        <ErrorText>
+          There was a problem while loading the project data
+        </ErrorText>
+        <ErrorButton onClick={useGetProjects}>Try again</ErrorButton>
+      </ErrorParent>
+    );
   }
 
   if (issuesPage.isError) {
     console.error(issuesPage.error);
-    return <div>Error loading issues: {issuesPage.error.message}</div>;
+    return (
+      <ErrorParent>
+        <ErrorIcon src="/icons/error.svg" />
+        <ErrorText>
+          There was a problem while loading the project data
+        </ErrorText>
+        <ErrorButton onClick={useGetProjects}>Try again</ErrorButton>
+      </ErrorParent>
+    );
   }
 
   const projectIdToLanguage = (projects.data || []).reduce(

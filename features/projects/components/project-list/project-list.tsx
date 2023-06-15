@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { breakpoint, space } from "@styles/theme";
+import { breakpoint, color, space } from "@styles/theme";
 import { ProjectCard } from "../project-card";
 import { useGetProjects } from "../../api/use-get-projects";
 
@@ -47,6 +47,49 @@ const Spinner = styled.div`
   border-radius: 50%;
 `;
 
+const ErrorParent = styled.div`
+  border: 1px solid #fda29b;
+  border-radius: 8px;
+  padding-block: 16px;
+  display: flex;
+  align-items: center;
+`;
+
+const ErrorIcon = styled.img`
+  margin-inline-end: 13.5px;
+  margin-inline-start: 17.5px;
+`;
+
+const ErrorText = styled.p`
+  color: ${color("error", 700)};
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+`;
+
+const ErrorButton = styled.button`
+  font-family: "Inter";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  margin-inline-start: auto;
+  margin-inline-end: 20px;
+  color: ${color("error", 700)};
+  background-color: transparent;
+  background-image: url("/icons/button-icon.svg");
+  background-repeat: no-repeat;
+  background-position: right 50%;
+  border: none;
+  text-align: start;
+  padding: 0;
+  min-width: 80px;
+
+  @media (min-width: ${breakpoint("desktop")}) {
+    padding-right: 12px;
+  }
+`;
+
 export function ProjectList() {
   const { data, isLoading, isError, error } = useGetProjects();
 
@@ -60,7 +103,15 @@ export function ProjectList() {
 
   if (isError) {
     console.error(error);
-    return <div>Error: {error.message}</div>;
+    return (
+      <ErrorParent>
+        <ErrorIcon src="/icons/error.svg" />
+        <ErrorText>
+          There was a problem while loading the project data
+        </ErrorText>
+        <ErrorButton onClick={useGetProjects}>Try again</ErrorButton>
+      </ErrorParent>
+    );
   }
 
   return (
