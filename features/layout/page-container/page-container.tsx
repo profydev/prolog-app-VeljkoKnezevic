@@ -5,7 +5,7 @@ import { SidebarNavigation } from "../sidebar-navigation";
 import { color, displayFont, textFont, space, breakpoint } from "@styles/theme";
 import { NavigationContext } from "../sidebar-navigation";
 import { useContext } from "react";
-import { version } from "package.json";
+import packageInfo from "package.json";
 
 type PageContainerProps = {
   children: React.ReactNode;
@@ -132,7 +132,7 @@ export function PageContainer({ children, title, info }: PageContainerProps) {
             <ListItem>Community</ListItem>
           </List>
           <Logo src="/icons/logo-small.svg" />
-          <Version>Version: {version}</Version>
+          <Version>Version: {packageInfo.version}</Version>
         </Footer>
       </Main>
     </Container>
